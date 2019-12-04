@@ -53,9 +53,9 @@ func getOutputFromInputs(noun, verb int) int {
 
 func main() {
 	var output, noun, verb = 0, 0, 0
-	for ; output != 19690720 && noun < 99; noun++ {
+	for ; output != 19690720 && noun <= 99; noun++ {
 		verb = 0
-		for ; output != 19690720 && verb < 99; verb++ {
+		for ; output != 19690720 && verb <= 99; verb++ {
 			output = getOutputFromInputs(noun, verb)
 
 			if output == 19690720 {
