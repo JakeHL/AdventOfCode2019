@@ -101,16 +101,40 @@ func main() {
 	}
 
 	var firstWire = wires[0]
-	var seccondWire = wires[1]
+	var secondWire = wires[1]
 	var intersections []WirePosition = []WirePosition{}
 
 	for _, fparts := range firstWire {
-		for _, sparts := range seccondWire {
+		for _, sparts := range secondWire {
 			if fparts.isEqual(sparts) {
 				intersections = append(intersections, fparts)
 			}
 		}
 	}
+
+	var lowestWireLength = len(firstWire) + len(secondWire)
+	for _, intersection := range intersections {
+		var fDist, sDist = 0, 0
+		for i, fpart := range firstWire {
+			if fpart.isEqual(intersection) {
+				fDist = i
+				break
+			}
+		}
+		if fDist < lowestWireLength {
+			for i, spart := range secondWire {
+				if spart.isEqual(intersection) {
+					sDist = i
+					break
+				}
+			}
+			var distanceSum = fDist + sDist
+			if distanceSum < lowestWireLength && distanceSum > 0 {
+				lowestWireLength = distanceSum
+			}
+		}
+	}
+	fmt.Printf("Lowest wire length: %v\n", lowestWireLength)
 
 	var lowest = intersections[1].distance()
 	for _, i := range intersections {
@@ -119,8 +143,7 @@ func main() {
 			lowest = dist
 		}
 	}
-	fmt.Print(lowest)
-
+	fmt.Printf("Lowest: %v\n", lowest)
 }
 
 func abs(val int) int {
