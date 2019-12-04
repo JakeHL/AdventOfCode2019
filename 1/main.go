@@ -2,29 +2,15 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
-	"os"
 	"strconv"
 	"strings"
+
+	"github.com/JakeHl/AdventOfCode2019/utils"
 )
 
-func readTextFile(filename string) string {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	b, err := ioutil.ReadAll(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return string(b)
-}
-
 func getMassesFromFile(filename string) (inputs []int32) {
-	var inputsTxt = readTextFile(filename)
+	var inputsTxt, _ = utils.ReadTextFile(filename)
 	var inputsStrings = strings.Split(inputsTxt, "\n")
 	inputs = make([]int32, len(inputsStrings))
 	for i, v := range inputsStrings {
