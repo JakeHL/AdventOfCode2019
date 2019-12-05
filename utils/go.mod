@@ -1,3 +1,3 @@
-module github.com/JakeHl/AdventOfCode2019/utils
+module utils
 
 go 1.13

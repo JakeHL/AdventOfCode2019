@@ -1,4 +1,4 @@
-module github.com/JakeHL/AdventOfCode2019/1
+module day1
 
 go 1.13
 
