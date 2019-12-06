@@ -32,53 +32,123 @@ func (sc *ShipComputer) Iterate() {
 
 	switch newIntCode {
 	case "01":
-		position := pc + 3
+		param3 := pc + 3
 		if !isAImmediate {
-			position = sc.memory[pc+3]
+			param3 = sc.memory[pc+3]
 		}
-		verb := sc.memory[pc+2]
+		param2 := sc.memory[pc+2]
 		if !isBImmediate {
-			verb = sc.memory[verb]
+			param2 = sc.memory[param2]
 		}
-		noun := sc.memory[pc+1]
+		param1 := sc.memory[pc+1]
 		if !isCImmediate {
-			noun = sc.memory[noun]
+			param1 = sc.memory[param1]
 		}
-		sc.memory[position] = noun + verb
+		sc.memory[param3] = param1 + param2
 		sc.programCounter += 4
 		break
 	case "02":
-		position := pc + 3
+		param3 := pc + 3
 		if !isAImmediate {
-			position = sc.memory[pc+3]
+			param3 = sc.memory[pc+3]
 		}
-		verb := sc.memory[pc+2]
+		param2 := sc.memory[pc+2]
 		if !isBImmediate {
-			verb = sc.memory[verb]
+			param2 = sc.memory[param2]
 		}
-		noun := sc.memory[pc+1]
+		param1 := sc.memory[pc+1]
 		if !isCImmediate {
-			noun = sc.memory[noun]
+			param1 = sc.memory[param1]
 		}
-		sc.memory[position] = noun * verb
+		sc.memory[param3] = param1 * param2
 		sc.programCounter += 4
 		break
 	case "03":
-		intInput := 1
-		noun := pc + 1
+		intInput := 5
+		param1 := pc + 1
 		if !isCImmediate {
-			noun = sc.memory[noun]
+			param1 = sc.memory[param1]
 		}
-		sc.memory[noun] = intInput
+		sc.memory[param1] = intInput
 		sc.programCounter += 2
 		break
 	case "04":
-		noun := pc + 1
+		param1 := pc + 1
 		if !isCImmediate {
-			noun = sc.memory[noun]
+			param1 = sc.memory[param1]
 		}
-		fmt.Printf("Output: %v\n", sc.memory[noun])
+		fmt.Printf("Output: %v\n", sc.memory[param1])
 		sc.programCounter += 2
+		break
+	case "05":
+		param2 := sc.memory[pc+2]
+		if !isBImmediate {
+			param2 = sc.memory[param2]
+		}
+		param1 := sc.memory[pc+1]
+		if !isCImmediate {
+			param1 = sc.memory[param1]
+		}
+		if param1 != 0 {
+			sc.programCounter = param2
+		} else {
+			sc.programCounter += 3
+		}
+		break
+	case "06":
+		param2 := sc.memory[pc+2]
+		if !isBImmediate {
+			param2 = sc.memory[param2]
+		}
+		param1 := sc.memory[pc+1]
+		if !isCImmediate {
+			param1 = sc.memory[param1]
+		}
+		if param1 == 0 {
+			sc.programCounter = param2
+		} else {
+			sc.programCounter += 3
+		}
+		break
+	case "07":
+		param3 := pc + 3
+		if !isAImmediate {
+			param3 = sc.memory[pc+3]
+		}
+		param2 := sc.memory[pc+2]
+		if !isBImmediate {
+			param2 = sc.memory[param2]
+		}
+		param1 := sc.memory[pc+1]
+		if !isCImmediate {
+			param1 = sc.memory[param1]
+		}
+		result := 0
+		if param1 < param2 {
+			result = 1
+		}
+		sc.memory[param3] = result
+		sc.programCounter += 4
+		break
+	case "08":
+		param3 := pc + 3
+		if !isAImmediate {
+			param3 = sc.memory[pc+3]
+		}
+		param2 := sc.memory[pc+2]
+		if !isBImmediate {
+			param2 = sc.memory[param2]
+		}
+		param1 := sc.memory[pc+1]
+		if !isCImmediate {
+			param1 = sc.memory[param1]
+		}
+		result := 0
+		if param1 == param2 {
+			result = 1
+		}
+		sc.memory[param3] = result
+		sc.programCounter += 4
 		break
 	case "99":
 		sc.programCounter = -1
