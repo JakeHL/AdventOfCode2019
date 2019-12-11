@@ -12,6 +12,10 @@ type orbit struct {
 	name, orbits string
 }
 
+func (o orbit) String() string {
+	return fmt.Sprintf("{ name: %v, orbits: %v }\n", o.name, o.orbits)
+}
+
 func getOrbitsFromFile(filename string) []orbit {
 	inputString, err := utils.ReadTextFile(filename)
 	if err != nil {
@@ -70,10 +74,39 @@ func main() {
 		next := v
 		for next != "COM" {
 			orbit := getOrbitForPlanet(orbits, next)
-			orbitCount++
 			next = orbit.orbits
+			orbitCount++
 		}
 	}
 
-	fmt.Print(orbitCount)
+	youOrbits := []orbit{}
+	youNext := "YOU"
+	for youNext != "COM" {
+		orbit := getOrbitForPlanet(orbits, youNext)
+		youNext = orbit.orbits
+		youOrbits = append(youOrbits, orbit)
+	}
+
+	sanOrbits := []orbit{}
+	sanNext := "SAN"
+	for sanNext != "COM" {
+		orbit := getOrbitForPlanet(orbits, sanNext)
+		sanNext = orbit.orbits
+		sanOrbits = append(sanOrbits, orbit)
+	}
+
+	jumpsToSanta := 0
+	for yi, yv := range youOrbits {
+		for si, sv := range sanOrbits {
+			if yv.name == sv.name {
+				jumpsToSanta = yi + si - 2 // to account for san & you orbits
+				break
+			}
+		}
+		if jumpsToSanta != 0 {
+			break
+		}
+	}
+
+	fmt.Printf("total orbits: %v, jumps to santa: %v", orbitCount, jumpsToSanta)
 }
